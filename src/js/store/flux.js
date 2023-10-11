@@ -1,20 +1,27 @@
+// import { isHtmlElement } from "react-router-dom";
+// import { DataRouterContext } from "react-router";
+
+
 const getState = ({ getStore, getActions, setStore }) => {
+	
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			todos: null, apiUrl:"https://playground.4geeks.com/apis/fake/todos/user"
 		},
 		actions: {
+			addTodos: () => {
+				fetch(apiUrl)
+				.then((resp) => resp.json())
+				.then((data) => setStore({todos:data.resoults}))
+				.catch((error) => console.log("error has occurd", error))
+				
+			},
+
+			deleteTodos: (index) => {
+				let store = getStore()
+				let newTodos = store.todos.filter((item) => item.index !== index)
+
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
